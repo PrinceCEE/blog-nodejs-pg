@@ -9,6 +9,8 @@ export const COMMENT_SCHEMA = `
     commentID     UUID PRIMARY KEY,
     content       TEXT NOT NULL,
     postID        UUID REFERENCES ${POST_TABLE_NAME} (postID),
-    userID        UUID REFERENCES ${USER_TABLE_NAME} (userID)
+    userID        UUID REFERENCES ${USER_TABLE_NAME} (userID),
+    createdAt     TIMESTAMPZ DEFAULT NOW(),
+    updatedAt     TIMESTAMPZ DEFAULT NOW()
   )
 `;

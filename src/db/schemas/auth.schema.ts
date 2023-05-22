@@ -5,6 +5,8 @@ export const AUTH_SCHEMA = `
     authID            UUID PRIMARY KEY,
     userID            UUID NOT NULL REFERENCES ${USER_TABLE_NAME} (userID)
     password          TEXT NOT NULL,
-    passwordsHistory  TEXT[] DEFAULT []
+    passwordsHistory  TEXT[] DEFAULT [],
+    createdAt         TIMESTAMPZ DEFAULT NOW(),
+    updatedAt         TIMESTAMPZ DEFAULT NOW()
   )
 `;
