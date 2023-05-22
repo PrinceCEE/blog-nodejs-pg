@@ -3,8 +3,13 @@ import { CommentController } from "src/controllers";
 import { CommentMiddleware } from "src/middlewares";
 
 export default () => {
+  const commentController = new CommentController();
   const router = Router();
 
-  // set up the routes
+  router.post("/new", commentController.createComment);
+  router.put("/:commentID", commentController.updateComment);
+  router.get("/:commentID", commentController.getComment);
+  router.delete("/:commentID", commentController.deleteComment);
+
   return router;
 };

@@ -15,9 +15,9 @@ app.use(cors());
 app.use(morgan("dev"));
 app.get("/health", (req, res) => res.send("Server is healthy"));
 app.use("/auth", authRouter());
-app.use("/user", userRouter());
-app.use("/comment", commentRouter());
-app.use("/post", postRouter());
+app.use("/users", userRouter());
+app.use("/comments", commentRouter());
+app.use("/posts", postRouter());
 
 // handling errors
 app.use((err: any, req: Req, res: Res, next: Next) => {
