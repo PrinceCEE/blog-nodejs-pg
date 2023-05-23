@@ -1,8 +1,8 @@
 import { AUTH_TABLE_NAME, USER_TABLE_NAME } from "src/constants";
 
 export const AUTH_SCHEMA = `
-  CREATE TABLE ${AUTH_TABLE_NAME} IF NOT EXIST (
-    authID            UUID PRIMARY KEY,
+  CREATE TABLE ${AUTH_TABLE_NAME} IF NOT EXISTS (
+    authID            UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
     userID            UUID NOT NULL REFERENCES ${USER_TABLE_NAME} (userID)
     password          TEXT NOT NULL,
     passwordsHistory  TEXT[] DEFAULT [],
