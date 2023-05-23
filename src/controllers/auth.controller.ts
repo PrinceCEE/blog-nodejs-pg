@@ -1,9 +1,10 @@
 import randomatic from "randomatic";
-import { getObjects, insertObject } from "src/db";
+import { getObjects, insertObject, updateObject } from "src/db";
 import { BadRequestError, NotFoundError, UnauthorizedError } from "src/errors";
 import { confirmPassword, encryptAccessToken, hashPassword } from "src/helpers";
-import { Auth, ForgotPasswordCode, IResponse, Req, Res, User } from "src/types";
+import { Auth, ForgotPasswordCode, IResponse, Req, User } from "src/types";
 import {
+  ChangePasswordSchema,
   ForgotPasswordSchema,
   LoginSchema,
   RegisterSchema,
@@ -38,17 +39,17 @@ export default class AuthController {
       throw new BadRequestError(error.message);
     }
 
-    const user = (await getObjects<User>("users", {
+    const user = await getObjects<User>("users", {
       email: value.email,
-    }).then((rows) => rows[0])) as User;
+    }).then((rows) => rows[0]);
 
     if (!user) {
       throw new NotFoundError("User not found");
     }
 
-    const auth = (await getObjects<Auth>("auths", {
+    const auth = await getObjects<Auth>("auths", {
       userID: user.userID,
-    }).then((rows) => rows[0])) as Auth;
+    }).then((rows) => rows[0]);
 
     if (!(await confirmPassword(auth.password, value.password))) {
       throw new UnauthorizedError("Incorrect password or email");
@@ -72,9 +73,9 @@ export default class AuthController {
       throw new BadRequestError(error.message);
     }
 
-    const user = (await getObjects<User>("users", {
+    const user = await getObjects<User>("users", {
       email: value.email,
-    }).then((rows) => rows[0])) as User;
+    }).then((rows) => rows[0]);
 
     if (!user) {
       throw new NotFoundError("User not found");
@@ -92,7 +93,60 @@ export default class AuthController {
     };
   };
 
-  changePassword = async (req: Req, res: Res) => {
-    res.send("Not Implemented");
+  changePassword = async (req: Req): Promise<IResponse> => {
+    const { error, value } = ChangePasswordSchema.validate(req.body);
+    if (error) {
+      throw new BadRequestError(error.message);
+    }
+
+    const user = await getObjects<User>("users", {
+      email: value.email,
+    }).then((rows) => rows[0]);
+
+    if (!user) {
+      throw new NotFoundError("User not found");
+    }
+
+    const forgotPasswordCode = await updateObject<ForgotPasswordCode>(
+      "forgot_password_codes",
+      {
+        code: value.code,
+        userID: user.userID,
+      },
+      {
+        isVerified: true,
+      }
+    );
+
+    if (!forgotPasswordCode) {
+      throw new BadRequestError("Error validating code");
+    }
+
+    let auth = await getObjects<Auth>("auths", {
+      userID: user.userID,
+    }).then((rows) => rows[0]);
+
+    const hashedPwd = await hashPassword(value.password);
+    const passwordsHistory = [...auth.passwordsHistory, auth.password];
+
+    auth = await updateObject<Auth>(
+      "auths",
+      {
+        userID: user.userID,
+      },
+      {
+        password: hashedPwd,
+        passwordsHistory,
+      }
+    );
+
+    if (!auth) {
+      throw new BadRequestError("Error updating password");
+    }
+
+    return {
+      status: true,
+      message: "Password changed successfully. You can now log in.",
+    };
   };
 }

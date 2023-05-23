@@ -16,5 +16,6 @@ export class ForgotPasswordDto {
 
 export class ChangePasswordDto {
   password: string;
-  uuid: string;
+  code: string;
+  email: string;
 }

@@ -1,4 +1,9 @@
-export type ITableNames = "auths" | "comments" | "users" | "posts";
+export type ITableNames =
+  | "auths"
+  | "comments"
+  | "users"
+  | "posts"
+  | "forgot_password_codes";
 
 export interface Auth {
   authID: string;
@@ -33,4 +38,11 @@ export interface Comment {
   userID: string;
   createdAt: Date;
   updatedAt: Date;
+}
+
+export interface ForgotPasswordCode {
+  userID: string;
+  tokenID: string;
+  code: string;
+  isVerified: boolean;
 }

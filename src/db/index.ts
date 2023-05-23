@@ -2,6 +2,7 @@ import pg from "pg";
 import {
   AUTH_SCHEMA,
   COMMENT_SCHEMA,
+  FORGOT_PASSWORD_CODE_SCHEMA,
   POST_SCHEMA,
   USER_SCHEMA,
   UUID_EXTENSION,
@@ -20,7 +21,7 @@ export const insertObject = async <T>(table: ITableNames, data: Partial<T>) => {
 
   const columns = keys.join(", ");
   const placeholders = values.map((_, i) => `$${i + 1}`).join(", ");
-  const queryResult = await pool.query<T[]>(
+  const queryResult = await pool.query<T>(
     `INSERT INTO ${table} (${columns}) VALUES (${placeholders}) RETURNING *`,
     values
   );
@@ -40,13 +41,34 @@ export const getObjects = async <T>(table: ITableNames, filter: Partial<T>) => {
     query = `SELECT * FROM ${table} WHERE ${placeholders}`;
   }
 
-  return pool.query<T[]>(query, values).then((q) => q.rows);
+  return pool.query<T>(query, values).then((q) => q.rows);
 };
 
 export const updateObject = async <T>(
   table: ITableNames,
+  filter: Partial<T>,
   data: Partial<T>
-) => {};
+) => {
+  const filterKeys = Object.keys(filter);
+  const filterValues = Object.values(filter);
+
+  const dataKeys = Object.keys(data);
+  const dataValues = Object.values(data);
+
+  let whereCommand = "",
+    setCommand = "";
+  if (filterKeys.length !== 0) {
+    whereCommand = `WHERE ${filterValues
+      .map((v, i) => `${v}=$${i + 1}`)
+      .join(", ")}`;
+  }
+  if (dataKeys.length !== 0) {
+    setCommand = `SET ${dataValues.map((v, i) => `${v}=$${i + 1}`).join(", ")}`;
+  }
+  return pool
+    .query<T>(`UPDATE FROM ${table} ${setCommand} ${whereCommand} RETURNING *`)
+    .then((r) => r.rows[0]);
+};
 
 export const initDB = async () => {
   await Promise.all([
@@ -55,5 +77,6 @@ export const initDB = async () => {
     pool.query(POST_SCHEMA),
     pool.query(USER_SCHEMA),
     pool.query(UUID_EXTENSION),
+    pool.query(FORGOT_PASSWORD_CODE_SCHEMA),
   ]);
 };
