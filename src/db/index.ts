@@ -66,8 +66,21 @@ export const updateObject = async <T>(
     setCommand = `SET ${dataValues.map((v, i) => `${v}=$${i + 1}`).join(", ")}`;
   }
   return pool
-    .query<T>(`UPDATE FROM ${table} ${setCommand} ${whereCommand} RETURNING *`)
+    .query<T>(
+      `UPDATE FROM ${table} ${setCommand} ${whereCommand} RETURNING *`,
+      dataValues
+    )
     .then((r) => r.rows[0]);
+};
+
+export const deletedObject = async <T>(
+  table: ITableNames,
+  filter: Partial<T>
+) => {
+  const key = Object.keys(filter)[0];
+  const value = Object.values(filter)[0];
+
+  return pool.query(`DELETE FROM ${table} WHERE ${key}=${value}`);
 };
 
 export const initDB = async () => {
