@@ -1,8 +1,13 @@
+import randomatic from "randomatic";
 import { getObjects, insertObject } from "src/db";
 import { BadRequestError, NotFoundError, UnauthorizedError } from "src/errors";
 import { confirmPassword, encryptAccessToken, hashPassword } from "src/helpers";
-import { Auth, IResponse, Req, Res, User } from "src/types";
-import { LoginSchema, RegisterSchema } from "src/validators";
+import { Auth, ForgotPasswordCode, IResponse, Req, Res, User } from "src/types";
+import {
+  ForgotPasswordSchema,
+  LoginSchema,
+  RegisterSchema,
+} from "src/validators";
 
 export default class AuthController {
   register = async (req: Req): Promise<IResponse> => {
@@ -61,8 +66,30 @@ export default class AuthController {
     };
   };
 
-  forgotPassword = async (req: Req, res: Res) => {
-    res.send("Not Implemented");
+  forgotPassword = async (req: Req): Promise<IResponse> => {
+    const { error, value } = ForgotPasswordSchema.validate(req.body);
+    if (error) {
+      throw new BadRequestError(error.message);
+    }
+
+    const user = (await getObjects<User>("users", {
+      email: value.email,
+    }).then((rows) => rows[0])) as User;
+
+    if (!user) {
+      throw new NotFoundError("User not found");
+    }
+
+    const code = randomatic("0", 6);
+    await insertObject<ForgotPasswordCode>("forgot_password_codes", {
+      code,
+      userID: user.userID,
+    });
+
+    return {
+      status: true,
+      message: "Email with validation code sent to your email",
+    };
   };
 
   changePassword = async (req: Req, res: Res) => {
