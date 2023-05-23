@@ -1,6 +1,6 @@
 import { deletedObject, getObjects, insertObject, updateObject } from "src/db";
 import { BadRequestError, NotFoundError } from "src/errors";
-import { IResponse, Post, Req, Res } from "src/types";
+import { IResponse, Post, Req, Comment } from "src/types";
 import { CreatePostSchema } from "src/validators/post.validator";
 
 export default class PostController {
@@ -87,5 +87,15 @@ export default class PostController {
     };
   };
 
-  getPostComments = async (req: Req): Promise<IResponse> => {};
+  getPostComments = async (req: Req): Promise<IResponse> => {
+    const comments = getObjects<Comment>("comments", {
+      postID: req.params.postID,
+    });
+
+    return {
+      status: true,
+      message: "Fetched post comments successfully",
+      data: comments,
+    };
+  };
 }

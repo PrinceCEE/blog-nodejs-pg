@@ -5,37 +5,37 @@ import { AuthMiddleware } from "src/middlewares";
 
 export default () => {
   const postController = new PostController();
-  const auhtMiddleware = new AuthMiddleware();
+  const authMiddleware = new AuthMiddleware();
   const router = Router();
 
   router.post(
     "/new",
-    auhtMiddleware.verifyAccessToken,
+    authMiddleware.verifyAccessToken,
     errorHandler(postController.createPost)
   );
   router.put(
     "/:postID",
-    auhtMiddleware.verifyAccessToken,
+    authMiddleware.verifyAccessToken,
     errorHandler(postController.updatePost)
   );
   router.get(
     "/",
-    auhtMiddleware.verifyAccessToken,
+    authMiddleware.verifyAccessToken,
     errorHandler(postController.getAllPosts)
   );
   router.get(
     "/:postID",
-    auhtMiddleware.verifyAccessToken,
+    authMiddleware.verifyAccessToken,
     errorHandler(postController.getPost)
   );
   router.get(
     "/:postID/comments",
-    auhtMiddleware.verifyAccessToken,
+    authMiddleware.verifyAccessToken,
     errorHandler(postController.getPostComments)
   );
   router.delete(
     "/:postID",
-    auhtMiddleware.verifyAccessToken,
+    authMiddleware.verifyAccessToken,
     errorHandler(postController.deletePost)
   );
 
