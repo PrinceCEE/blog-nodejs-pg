@@ -3,3 +3,8 @@ export type IResponse = {
   message: string;
   data?: any;
 };
+
+export type IAccessToken = {
+  email: string;
+  userID: string;
+};
