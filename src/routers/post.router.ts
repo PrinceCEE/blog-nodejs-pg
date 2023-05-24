@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { PostController } from "src/controllers";
-import { errorHandler } from "src/helpers";
-import { AuthMiddleware } from "src/middlewares";
+import { PostController } from "../controllers";
+import { errorHandler } from "../helpers";
+import { AuthMiddleware } from "../middlewares";
 
 export default () => {
   const postController = new PostController();

@@ -1,4 +1,4 @@
-import { USER_TABLE_NAME } from "src/constants";
+import { USER_TABLE_NAME } from "../../constants";
 
 export const USER_SCHEMA = `
   CREATE TABLE ${USER_TABLE_NAME} IF NOT EXISTS (

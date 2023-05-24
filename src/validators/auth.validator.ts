@@ -4,7 +4,7 @@ import {
   ForgotPasswordDto,
   LoginDto,
   RegisterDto,
-} from "src/dtos";
+} from "../dtos";
 
 const joiStr = Joi.string();
 

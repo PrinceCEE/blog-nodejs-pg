@@ -1,7 +1,7 @@
-import { deletedObject, getObjects, insertObject, updateObject } from "src/db";
-import { BadRequestError } from "src/errors";
-import { IResponse, Req, Comment } from "src/types";
-import { CreateCommentSchema, UpdateCommentSchema } from "src/validators";
+import { deletedObject, getObjects, insertObject, updateObject } from "../db";
+import { BadRequestError } from "../errors";
+import { IResponse, Req, Comment } from "../types";
+import { CreateCommentSchema, UpdateCommentSchema } from "../validators";
 
 export default class CommentController {
   createComment = async (req: Req): Promise<IResponse> => {

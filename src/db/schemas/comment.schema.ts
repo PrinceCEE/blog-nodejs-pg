@@ -2,7 +2,7 @@ import {
   COMMENT_TABLE_NAME,
   POST_TABLE_NAME,
   USER_TABLE_NAME,
-} from "src/constants";
+} from "../../constants";
 
 export const COMMENT_SCHEMA = `
   CREATE TABLE ${COMMENT_TABLE_NAME} IF NOT EXISTS (

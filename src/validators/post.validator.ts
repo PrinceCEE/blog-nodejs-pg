@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { CreatePostDto } from "src/dtos";
+import { CreatePostDto } from "../dtos";
 
 const joiStr = Joi.string();
 

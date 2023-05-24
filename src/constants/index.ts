@@ -1,4 +1,4 @@
-import { ITableNames } from "src/types";
+import { ITableNames } from "../types";
 
 export const COMMENT_TABLE_NAME: ITableNames = "comments";
 export const POST_TABLE_NAME: ITableNames = "posts";

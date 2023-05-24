@@ -1,6 +1,6 @@
 import { Router } from "express";
-import { AuthController } from "src/controllers";
-import { errorHandler } from "src/helpers";
+import { AuthController } from "../controllers";
+import { errorHandler } from "../helpers";
 
 export default () => {
   const authController = new AuthController();

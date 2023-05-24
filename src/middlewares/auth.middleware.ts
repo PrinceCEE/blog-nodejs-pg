@@ -1,7 +1,7 @@
-import { getObjects } from "src/db";
-import { NotFoundError, UnauthorizedError } from "src/errors";
-import { decodeAccessToken } from "src/helpers";
-import { Next, Req, Res, User } from "src/types";
+import { getObjects } from "../db";
+import { NotFoundError, UnauthorizedError } from "../errors";
+import { decodeAccessToken } from "../helpers";
+import { Next, Req, Res, User } from "../types";
 
 export default class AuthMiddleware {
   verifyAccessToken = async (req: Req, res: Res, next: Next) => {

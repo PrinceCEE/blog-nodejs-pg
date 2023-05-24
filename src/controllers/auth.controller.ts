@@ -1,14 +1,14 @@
 import randomatic from "randomatic";
-import { getObjects, insertObject, updateObject } from "src/db";
-import { BadRequestError, NotFoundError, UnauthorizedError } from "src/errors";
-import { confirmPassword, encryptAccessToken, hashPassword } from "src/helpers";
-import { Auth, ForgotPasswordCode, IResponse, Req, User } from "src/types";
+import { getObjects, insertObject, updateObject } from "../db";
+import { BadRequestError, NotFoundError, UnauthorizedError } from "../errors";
+import { confirmPassword, encryptAccessToken, hashPassword } from "../helpers";
+import { Auth, ForgotPasswordCode, IResponse, Req, User } from "../types";
 import {
   ChangePasswordSchema,
   ForgotPasswordSchema,
   LoginSchema,
   RegisterSchema,
-} from "src/validators";
+} from "../validators";
 
 export default class AuthController {
   register = async (req: Req): Promise<IResponse> => {

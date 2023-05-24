@@ -1,7 +1,7 @@
 import {
   FORGOT_PASSWORD_CODE_TABLE_NAME,
   USER_TABLE_NAME,
-} from "src/constants";
+} from "../../constants";
 
 export const FORGOT_PASSWORD_CODE_SCHEMA = `
   CREATE TABLE IF NOT EXISTS ${FORGOT_PASSWORD_CODE_TABLE_NAME} (

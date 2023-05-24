@@ -1,7 +1,7 @@
-import { getObjects, updateObject } from "src/db";
-import { BadRequestError, NotFoundError } from "src/errors";
-import { IResponse, Req, Res, User } from "src/types";
-import { UpdateUserSchema } from "src/validators";
+import { getObjects, updateObject } from "../db";
+import { BadRequestError } from "../errors";
+import { IResponse, Req, User } from "../types";
+import { UpdateUserSchema } from "../validators";
 
 export default class UserController {
   getProfile = async (req: Req): Promise<IResponse> => {

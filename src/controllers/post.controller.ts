@@ -1,7 +1,7 @@
-import { deletedObject, getObjects, insertObject, updateObject } from "src/db";
-import { BadRequestError, NotFoundError } from "src/errors";
-import { IResponse, Post, Req, Comment } from "src/types";
-import { CreatePostSchema } from "src/validators/post.validator";
+import { deletedObject, getObjects, insertObject, updateObject } from "../db";
+import { BadRequestError, NotFoundError } from "../errors";
+import { IResponse, Post, Req, Comment } from "../types";
+import { CreatePostSchema } from "../validators/post.validator";
 
 export default class PostController {
   createPost = async (req: Req): Promise<IResponse> => {

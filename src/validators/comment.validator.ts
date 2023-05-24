@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { CreateCommentDto, UpdateCommentDto } from "src/dtos";
+import { CreateCommentDto, UpdateCommentDto } from "../dtos";
 
 const joiStr = Joi.string();
 

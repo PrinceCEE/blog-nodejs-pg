@@ -7,7 +7,7 @@ import {
   USER_SCHEMA,
   UUID_EXTENSION,
 } from "./schemas";
-import { ITableNames } from "src/types";
+import { ITableNames } from "../types";
 
 export const pool = new pg.Pool();
 

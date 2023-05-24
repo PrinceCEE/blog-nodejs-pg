@@ -1,4 +1,4 @@
-import { AUTH_TABLE_NAME, USER_TABLE_NAME } from "src/constants";
+import { AUTH_TABLE_NAME, USER_TABLE_NAME } from "../../constants";
 
 export const AUTH_SCHEMA = `
   CREATE TABLE ${AUTH_TABLE_NAME} IF NOT EXISTS (

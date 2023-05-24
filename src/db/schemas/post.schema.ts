@@ -1,4 +1,4 @@
-import { POST_TABLE_NAME, USER_TABLE_NAME } from "src/constants";
+import { POST_TABLE_NAME, USER_TABLE_NAME } from "../../constants";
 
 export const POST_SCHEMA = `
   CREATE TABLE ${POST_TABLE_NAME} IF NOT EXISTS (

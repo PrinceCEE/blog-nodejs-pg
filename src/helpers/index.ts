@@ -1,7 +1,7 @@
-import { IAccessToken, IResponse, Next, Req, Res } from "src/types";
+import { IAccessToken, IResponse, Next, Req, Res } from "../types";
 import { compare, genSalt, hash } from "bcrypt";
 import { sign, verify } from "jsonwebtoken";
-import { TOKEN_EXPIRES_IN, TOKEN_SECRET } from "src/constants";
+import { TOKEN_EXPIRES_IN, TOKEN_SECRET } from "../constants";
 
 export const errorHandler =
   (handler: (req: Req, res?: Res) => Promise<IResponse>) =>
