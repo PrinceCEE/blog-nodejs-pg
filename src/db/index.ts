@@ -84,12 +84,16 @@ export const deletedObject = async <T>(
 };
 
 export const initDB = async () => {
-  await Promise.all([
-    pool.query(AUTH_SCHEMA),
-    pool.query(COMMENT_SCHEMA),
-    pool.query(POST_SCHEMA),
-    pool.query(USER_SCHEMA),
-    pool.query(UUID_EXTENSION),
-    pool.query(FORGOT_PASSWORD_CODE_SCHEMA),
-  ]);
+  const schemas = [
+    USER_SCHEMA,
+    AUTH_SCHEMA,
+    FORGOT_PASSWORD_CODE_SCHEMA,
+    POST_SCHEMA,
+    COMMENT_SCHEMA,
+    UUID_EXTENSION,
+  ];
+
+  for await (let schema of schemas) {
+    await pool.query(schema);
+  }
 };
