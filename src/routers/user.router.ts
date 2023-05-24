@@ -1,7 +1,7 @@
 import { Router } from "express";
 import { UserController } from "src/controllers";
 import { errorHandler } from "src/helpers";
-import { AuthMiddleware, UserMiddleware } from "src/middlewares";
+import { AuthMiddleware } from "src/middlewares";
 
 export default () => {
   const userController = new UserController();

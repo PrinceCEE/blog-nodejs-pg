@@ -1,7 +1,6 @@
 import { Router } from "express";
 import { AuthController } from "src/controllers";
 import { errorHandler } from "src/helpers";
-import { AuthMiddleware } from "src/middlewares";
 
 export default () => {
   const authController = new AuthController();
