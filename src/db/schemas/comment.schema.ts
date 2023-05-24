@@ -5,12 +5,12 @@ import {
 } from "../../constants";
 
 export const COMMENT_SCHEMA = `
-  CREATE TABLE ${COMMENT_TABLE_NAME} IF NOT EXISTS (
+  CREATE TABLE IF NOT EXISTS ${COMMENT_TABLE_NAME} (
     commentID     UUID PRIMARY KEY,
     content       TEXT NOT NULL,
     postID        UUID REFERENCES ${POST_TABLE_NAME} (postID),
     userID        UUID REFERENCES ${USER_TABLE_NAME} (userID),
-    createdAt     TIMESTAMPZ DEFAULT NOW(),
-    updatedAt     TIMESTAMPZ DEFAULT NOW()
+    createdAt     TIMESTAMPTZ DEFAULT NOW(),
+    updatedAt     TIMESTAMPTZ DEFAULT NOW()
   )
 `;

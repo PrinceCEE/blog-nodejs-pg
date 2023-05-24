@@ -9,17 +9,22 @@ const startApp = async () => {
   const PORT = process.env["PORT"];
   const server = http.createServer(app);
 
-  await initDB();
-  console.log("Server connected to the DB");
+  try {
+    await initDB();
+    console.log("Server connected to the DB");
 
-  server.listen(PORT, () => {
-    console.log(`Server started on port ${PORT}`);
-  });
+    server.listen(PORT, () => {
+      console.log(`Server started on port ${PORT}`);
+    });
 
-  server.on("error", (err) => {
-    console.error(err);
+    server.on("error", (err) => {
+      console.error(err);
+      process.exit(1);
+    });
+  } catch (err) {
+    console.log((err as Error).message);
     process.exit(1);
-  });
+  }
 };
 
 startApp();
