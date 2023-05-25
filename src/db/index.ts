@@ -9,7 +9,15 @@ import {
 } from "./schemas";
 import { ITableNames } from "../types";
 
-export const pool = new pg.Pool();
+const pool = new pg.Pool();
+const schemas = [
+  USER_SCHEMA,
+  AUTH_SCHEMA,
+  FORGOT_PASSWORD_CODE_SCHEMA,
+  POST_SCHEMA,
+  COMMENT_SCHEMA,
+  UUID_EXTENSION,
+];
 
 export const insertObject = async <T>(table: ITableNames, data: Partial<T>) => {
   const keys = Object.keys(data);
@@ -84,16 +92,9 @@ export const deletedObject = async <T>(
 };
 
 export const initDB = async () => {
-  const schemas = [
-    USER_SCHEMA,
-    AUTH_SCHEMA,
-    FORGOT_PASSWORD_CODE_SCHEMA,
-    POST_SCHEMA,
-    COMMENT_SCHEMA,
-    UUID_EXTENSION,
-  ];
-
   for await (let schema of schemas) {
     await pool.query(schema);
   }
+
+  return pool;
 };
